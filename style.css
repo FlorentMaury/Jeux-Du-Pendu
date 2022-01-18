@@ -41,15 +41,8 @@ h1 {
     margin      : 3px;
 }
 
-#wordButton {
-    background   : var(--couleurOrange);
-    border-radius: 5px;
-    padding: 6px;
-    border : black;
-    color  : white;
-    font-size: 1em;
-}
-
+#wordButton,
+#shortcutButton,
 #letterButton {
     background   : var(--couleurOrange);
     border-radius: 5px;
@@ -57,21 +50,19 @@ h1 {
     padding: 6px;
     color  : white;
     margin-left: 5px;
+    font-size: 1em;
 }
 
-#wordButton:hover {
-    background: var(--couleurOrange);
-    box-shadow: 0px 0px 6px 5px var(--couleurViolette);
-    transition: all 0.3s;
-}
-
+#wordButton:hover,
+#shortcutButton:hover,
 #letterButton:hover {
     transition: all 0.3s;
     box-shadow: 0px 0px 6px 5px var(--couleurViolette);
 }
 
 #letterButton:active,
-#wordButton:active {
+#wordButton:active,
+#shortcutButton:active {
     box-shadow: inset 0px 0px 39px 5px var(--couleurViolette);
     transition: all 0.3s;
 }
@@ -79,7 +70,8 @@ h1 {
 h1,
 #hangman,
 #secretWord,
-#userChoice,
-#wordButton {
+#userLetter,
+#wordButton,
+#shortcutButton {
     margin-top: 30px;
 }

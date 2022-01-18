@@ -20,18 +20,18 @@
         <div id="secretWord"></div>
         
         <form>
-            <label for="userChoice">Entrez une lettre :</label>
-            <input type="text" name="userChoice" id="userChoice" placeholder="a" maxlength="1" size="1" required autofocus>
-            <input type="submit" value="OK" id="letterButton">
-            <p id="alertMessage">Vous devez entrer une lettre et non un nombre !</p>
+            <label for="userLetter">Entrez une lettre :</label>
+            <input type="text" name="userLetter" id="userLetter" placeholder="a" maxlength="1" size="1" autofocus>
+            <button type="button" id="letterButton">OK</button>
+            <p id="alertMessage">Vous devez entrer une lettre !</p>
         </form>
 
-        <button id="wordButton">J'ai trouvé le mot !</button>
+        <button id="shortcutButton">J'ai trouvé le mot !</button>
 
-        <form id="userWord">
+        <form id="userWordForm">
             <label for="userWord">Entrez votre mot :</label>
             <input type="text" name="userWord" id="userWord" placeholder="cacahuete" maxlength="15" size="10">
-            <input type="submit" value="OK" id="wordButton">
+            <button type="button" id="wordButton">OK</button>
         </form>
 
     </div>

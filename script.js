@@ -1,6 +1,13 @@
-let userChoice, hangman, wordButton, alertMessage, userWord, secretWord, wordToFind;
+    // Initialisation des variables :
+
+let userLetter, hangman, wordButton, letterButton, alertMessage, userWord, secretWord, wordToFind, shortcutButton, userWordForm, secretWordInArray;
 let last   = 0;
 let hidden = true;
+
+
+
+
+  // Tableau contenant la liste des mots du jeux :
 
 const words = [
     'petunia', 'horoscope', 'tambourin', 'conquistador', 'diapason', 'brouhaha',
@@ -8,44 +15,66 @@ const words = [
 
 ];
 
-hangman      = document.querySelector('#hangman');
-secretWord   = document.querySelector('#secretWord');
-userChoice   = document.querySelector('#userChoice');
-wordButton   = document.querySelector('#wordButton');
-userWord     = document.querySelector('#userWord');
-alertMessage = document.querySelector('#alertMessage');
 
+
+    // Récupération des élèments HTML sur le JavaScript :
+
+hangman        = document.querySelector('#hangman');
+secretWord     = document.querySelector('#secretWord');
+userLetter     = document.querySelector('#userLetter');
+userWord       = document.querySelector('#userWord');
+letterButton   = document.querySelector('#letterButton');
+wordButton     = document.querySelector('#wordButton');
+shortcutButton = document.querySelector('#shortcutButton');
+userWordForm   = document.querySelector('#userWordForm');
+alertMessage   = document.querySelector('#alertMessage');
+
+
+
+    // Création de l'interface pour le début de partie :
 
 hangman.innerHTML = '<img src="img/hangman1.jpg" alt="Pendu début de partie">';
 alertMessage.style.color   = 'red';
 alertMessage.style.display = 'none';
-userWord.style.display = 'none';
+userWordForm.style.display = 'none';
+secretWord.textContent = '_ _ _ _';
 
 
 
-wordButton.addEventListener('click', () => {
+    // Création du bouton masqué si l'utilisateur'pense connaître le mot :
+
+shortcutButton.addEventListener('click', () => {
 
     if (hidden) {
 
-        userWord.style.display = 'block';
-        if (userWord == secretWord) {
-            userChoice.style.textContent = 'Félicitations, vous avez trouvé le mot secret !';
-        } else {
-            userChoice.style.textContent = 'Vous n\'avez pas réussi à sauver Mr Jack';
-        }
-        wordButton.textContent = 'Finalement... peut-être pas !';
+        userWordForm.style.display = 'block';
+        shortcutButton.textContent = 'Finalement... peut-être pas !';
         hidden = false;
         
     } else {
 
-        wordButton.textContent = 'J\'ai trouvé le mot !';
-        userWord.style.display = 'none';
+        shortcutButton.textContent = `J'ai trouvé le mot !`;
+        userWordForm.style.display = 'none';
         hidden = true;
     }
-})
+});
 
 
 
+
+    // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'une lettre :
+
+userLetter.addEventListener('keyup', () => {
+    if (isNaN(userLetter.value)) { 
+        alertMessage.style.display = 'none';
+    } else {
+        alertMessage.style.display = 'block';        
+    }
+});
+
+
+
+    // Sortie d'un des mots du tableau 'words' aléatoirement :
 
 function randomWord() {
 
@@ -58,54 +87,30 @@ function randomWord() {
 }
 
 
+    // Fonction de lancement de la partie :
+
 function newGame() {   
 
     randomWord();
 
-    secretWord.textContent = wordToFind;
-}
+    secretWord = wordToFind;
 
+    secretWordInArray = secretWord.split('');
 
-newGame();
+    console.log(secretWordInArray);
 
+    letterButton.addEventListener('click', () => {
 
-// Transformer mot en tableau 
-
-
-
-// Entrer lettre utilisateur
-
-// Transformer lettre utilisateur
-
-// Si lettre trouvée remplacer
-
-// Si erreur modifier image
-
-
-
-
-
-
-
-// window.onload = newGame();
-
-
-// function newGame() {
-
-    wordButton.addEventListener('click', () => {
-        userWord.style.display = 'block';
-        if (userWord == secretWord) {
-            userChoice.style.textContent = 'Félicitations, vous avez trouvé le mot secret !';
+    if (secretWordInArray.includes(userLetter)) {
+            alert('Une de bonne !');
         } else {
-            userChoice.style.textContent = 'Vous n\'avez pas réussi à sauver Mr Jack';
+            alert('Eh non !')
         }
     })
-
-
-// }
-
+};
 
 
 
+    // Appel de la fonction de début de partie :
 
-
+newGame();
