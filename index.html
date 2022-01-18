@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/hangman-favicon.jpg" type="image/jpg">
+    <title>Jeu du Pendu, Projet Believemy</title>
+</head>
+
+<body>
+    
+    <div id="content">
+
+        <h1>Jeu du pendu</h1>
+
+        <div id="hangman">Image</div>
+
+        <div id="secretWord"></div>
+        
+        <form>
+            <label for="userChoice">Entrez une lettre :</label>
+            <input type="text" name="userChoice" id="userChoice" placeholder="a" maxlength="1" size="1">
+            <input type="submit" value="OK" id="letterButton">
+            <p id="alertMessage">Vous devez entrer une lettre et non un nombre !</p>
+        </form>
+
+        <button id="wordButton">J'ai trouvé le mot !</button>
+
+        <form id="userWord">
+            <label for="userWord">Entrez votre mot :</label>
+            <input type="text" name="userWord" id="userWord" placeholder="cacahuete" maxlength="15" size="10">
+            <input type="submit" value="OK" id="wordButton">
+        </form>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
