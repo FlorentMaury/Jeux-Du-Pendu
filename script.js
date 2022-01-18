@@ -1,7 +1,8 @@
     // Initialisation des variables :
 
-let userLetter, hangman, wordButton, letterButton, alertMessage, userWord, secretWord, wordToFind, shortcutButton, userWordForm, secretWordInArray;
+let userLetter, hangman, wordButton, letterButton, alertMessage, userWord, secretWord, wordToFind, shortcutButton, userWordForm, wordToFindInArray;
 let last   = 0;
+let score  = 0;
 let hidden = true;
 
 
@@ -33,11 +34,11 @@ alertMessage   = document.querySelector('#alertMessage');
 
     // Création de l'interface pour le début de partie :
 
-hangman.innerHTML = '<img src="img/hangman1.jpg" alt="Pendu début de partie">';
+hangman.innerHTML = `<img src="img/hangman${score}.jpg" alt="Pendu début de partie">`;
 alertMessage.style.color   = 'red';
 alertMessage.style.display = 'none';
 userWordForm.style.display = 'none';
-secretWord.textContent = '_ _ _ _';
+secretWord.textContent = '_ _ _ _ _ _';
 
 
 
@@ -93,22 +94,26 @@ function newGame() {
 
     randomWord();
 
-    secretWord = wordToFind;
+    // secretWord = wordToFind;
 
-    secretWordInArray = secretWord.split('');
+    // secretWord.textContent = wordToFind;
 
-    console.log(secretWordInArray);
+    wordToFindInArray = wordToFind.split('');
+
+    console.log(wordToFindInArray);
 
     letterButton.addEventListener('click', () => {
 
-    if (secretWordInArray.includes(userLetter)) {
-            alert('Une de bonne !');
+        if (wordToFindInArray.includes(userLetter.value)) {
+            alert('Yes')
         } else {
-            alert('Eh non !')
+            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Pendu début de partie">`;
+            if (score == 7) {
+                alert('Perdu !')
+            }
         }
-    })
-};
-
+    });
+}
 
 
     // Appel de la fonction de début de partie :
