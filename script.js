@@ -108,6 +108,20 @@ function newGame() {
             alert('Yes')
         } else {
             hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Pendu début de partie">`;
+            alert('Nope')
+            if (score == 7) {
+                alert('Perdu !')
+            }
+        }
+    });
+
+    wordButton.addEventListener('click', () => {
+
+        if (wordToFind == userWord.value) {
+            alert('Yes')
+        } else {
+            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Pendu début de partie">`;
+            alert('Nope')
             if (score == 7) {
                 alert('Perdu !')
             }
