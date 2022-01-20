@@ -1,6 +1,6 @@
     // Initialisation des variables :
 
-let userLetter, hangman, wordButton, letterButton, alertMessage, userWord, secretWord, wordToFind, shortcutButton, userWordForm, wordToFindInArray;
+let userLetter, hangman, wordButton, letterButton, alertMessageLetter, restartButton, userWord, userInput, wordToFind, shortcutButton, userWordForm, wordToFindInArray, hiddenWord;
 let last   = 0;
 let score  = 0;
 let hidden = true;
@@ -11,35 +11,37 @@ let hidden = true;
   // Tableau contenant la liste des mots du jeux :
 
 const words = [
-    'petunia', 'horoscope', 'tambourin', 'conquistador', 'diapason', 'brouhaha',
-    'iceberg', 'avalanche', 'bilboquet', 'cornemuse', 'believemy', 'chimpanze'
+    'PETUNIA', 'HOROSCOPE', 'TAMBOURIN', 'CONQUISTADOR', 'DIAPASON', 'BROUHAHA',
+    'ICEBERG', 'AVALANCHE', 'BILBOQUET', 'CORNEMUSE', 'BELIEVEMY', 'CHIMPANZE'
 
-];
+    ];
 
 
 
     // Récupération des élèments HTML sur le JavaScript :
 
 hangman        = document.querySelector('#hangman');
-secretWord     = document.querySelector('#secretWord');
+hiddenWord     = document.querySelector('#hiddenWord');
 userLetter     = document.querySelector('#userLetter');
 userWord       = document.querySelector('#userWord');
 letterButton   = document.querySelector('#letterButton');
 wordButton     = document.querySelector('#wordButton');
-shortcutButton = document.querySelector('#shortcutButton');
-userWordForm   = document.querySelector('#userWordForm');
-alertMessage   = document.querySelector('#alertMessage');
+userInput      = document.querySelector('#userInput'); 
+restartButton     = document.querySelector('#restartButton');
+shortcutButton     = document.querySelector('#shortcutButton');
+userWordForm       = document.querySelector('#userWordForm');
+alertMessageLetter = document.querySelector('#alertMessageLetter');
+alertMessageWord   = document.querySelector('#alertMessageLetter');
+
 
 
 
     // Création de l'interface pour le début de partie :
 
-hangman.innerHTML = `<img src="img/hangman${score}.jpg" alt="Pendu début de partie">`;
-alertMessage.style.color   = 'red';
-alertMessage.style.display = 'none';
-userWordForm.style.display = 'none';
-secretWord.textContent = '_ _ _ _ _ _';
-
+hangman.innerHTML                = `<img src="img/hangman${score}.jpg" alt="Image du pendu">`;
+alertMessageLetter.style.display = 'none';
+userWordForm.style.display       = 'none';
+restartButton.style.display      = 'none';
 
 
     // Création du bouton masqué si l'utilisateur'pense connaître le mot :
@@ -62,15 +64,31 @@ shortcutButton.addEventListener('click', () => {
 
 
 
+    // Affichage caché du mot secret :
+    
+        // hiddenWord = wordToFind.slice().replace(/[A-Z]/g, '_');
+
+
 
     // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'une lettre :
 
 userLetter.addEventListener('keyup', () => {
     if (isNaN(userLetter.value)) { 
-        alertMessage.style.display = 'none';
+        alertMessageLetter.style.display = 'none';
     } else {
-        alertMessage.style.display = 'block';        
+        alertMessageLetter.style.display = 'block';        
     }
+});
+
+
+    // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'un mot :
+
+userWord.addEventListener('keyup', () => {
+     if (isNaN(userWord.value) || userWord.value == '') { 
+        alertMessageWord.style.display = 'none';
+     } else {
+         alertMessageWord.style.display = 'block';        
+     }
 });
 
 
@@ -81,9 +99,9 @@ function randomWord() {
 
     do {
         wordToFind = words[Math.floor(Math.random() * words.length)];
-    } while (words.indexOf(secretWord) === words[last]);
+    } while (words.indexOf(wordToFind) === words[last]);
 
-    last = words.indexOf(secretWord); 
+    last = words.indexOf(wordToFind); 
 
 }
 
@@ -94,36 +112,40 @@ function newGame() {
 
     randomWord();
 
-    // secretWord = wordToFind;
-
-    // secretWord.textContent = wordToFind;
-
     wordToFindInArray = wordToFind.split('');
 
-    console.log(wordToFindInArray);
+    console.log(wordToFind);
+
+    hiddenWord.textContent = wordToFind.slice().replaceAll(/[A-Z]/g, '_');
 
     letterButton.addEventListener('click', () => {
 
-        if (wordToFindInArray.includes(userLetter.value)) {
-            alert('Yes')
+        if (wordToFindInArray.includes(userLetter.value = userLetter.value.toUpperCase())) {
+            alert('Yes');
         } else {
-            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Pendu début de partie">`;
+            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
             alert('Nope')
             if (score == 7) {
-                alert('Perdu !')
+                userInput.style.display = 'none';
+                hiddenWord.textContent  = wordToFind;
+                hiddenWord.prepend(textContent   = 'Le mot était : ');
+                restartButton.style.display      = 'block'; 
             }
         }
     });
 
     wordButton.addEventListener('click', () => {
 
-        if (wordToFind == userWord.value) {
+        if (wordToFind == userWord.value.toUpperCase()) {
             alert('Yes')
         } else {
-            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Pendu début de partie">`;
+            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
             alert('Nope')
             if (score == 7) {
-                alert('Perdu !')
+                userInput.style.display = 'none';
+                hiddenWord.textContent  = wordToFind;
+                hiddenWord.prepend(textContent   = 'Le mot était :');
+                restartButton.style.display      = 'block';
             }
         }
     });
