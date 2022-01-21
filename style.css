@@ -3,7 +3,7 @@
 
 
 :root {
-    --couleurNoire    : rgba(2, 0, 36, 0.918);
+    --couleurNoire    : rgba(2, 0, 36, 0.856);
     --couleurViolette : #3B0930;
     --couleurOrange   : rgba(233, 116, 0, 0.822);
 }
@@ -43,7 +43,7 @@ h1 {
     border-bottom : 1px solid var(--couleurOrange);
     font-size     : 1.5em;
     margin        : 3px;
-    letter-spacing: .3em;
+    letter-spacing: .5em;
     margin-top    : 30px;
 }
 
