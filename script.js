@@ -1,4 +1,4 @@
-    // Initialisation des variables :
+// Initialisation des variables :
 
 let userLetter, hangman, wordButton, letterButton, alertMessageLetter, restartButton, userWord, userInput, wordToFind, shortcutButton, userWordForm, wordToFindInArray, hiddenWord;
 let last   = 0;
@@ -13,7 +13,6 @@ let hidden = true;
 const words = [
     'PETUNIA', 'HOROSCOPE', 'TAMBOURIN', 'CONQUISTADOR', 'DIAPASON', 'BROUHAHA',
     'ICEBERG', 'AVALANCHE', 'BILBOQUET', 'CORNEMUSE', 'BELIEVEMY', 'CHIMPANZE'
-
     ];
 
 
@@ -38,120 +37,140 @@ alertMessageWord   = document.querySelector('#alertMessageLetter');
 
     // Création de l'interface pour le début de partie :
 
-hangman.innerHTML                = `<img src="img/hangman${score}.jpg" alt="Image du pendu">`;
+hangman.innerHTML                = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
 alertMessageLetter.style.display = 'none';
 userWordForm.style.display       = 'none';
 restartButton.style.display      = 'none';
 
-
-    // Création du bouton masqué si l'utilisateur'pense connaître le mot :
-
-shortcutButton.addEventListener('click', () => {
-
-    if (hidden) {
-
-        userWordForm.style.display = 'block';
-        shortcutButton.textContent = 'Finalement... peut-être pas !';
-        hidden = false;
-        
-    } else {
-
-        shortcutButton.textContent = `J'ai trouvé le mot !`;
-        userWordForm.style.display = 'none';
-        hidden = true;
-    }
-});
-
-
-
-    // Affichage caché du mot secret :
     
-        // hiddenWord = wordToFind.slice().replace(/[A-Z]/g, '_');
-
-
-
-    // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'une lettre :
-
-userLetter.addEventListener('keyup', () => {
-    if (isNaN(userLetter.value)) { 
-        alertMessageLetter.style.display = 'none';
-    } else {
-        alertMessageLetter.style.display = 'block';        
+    
+        // Sortie d'un des mots du tableau 'words' aléatoirement :
+    
+    function randomWord() {
+    
+        do {
+            wordToFind = words[Math.floor(Math.random() * words.length)];
+        } while (words.indexOf(wordToFind) === words[last]);
+    
+        last = words.indexOf(wordToFind); 
+    
     }
-});
+    
+    
 
-
-    // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'un mot :
-
-userWord.addEventListener('keyup', () => {
-     if (isNaN(userWord.value) || userWord.value == '') { 
-        alertMessageWord.style.display = 'none';
-     } else {
-         alertMessageWord.style.display = 'block';        
-     }
-});
-
-
-
-    // Sortie d'un des mots du tableau 'words' aléatoirement :
-
-function randomWord() {
-
-    do {
-        wordToFind = words[Math.floor(Math.random() * words.length)];
-    } while (words.indexOf(wordToFind) === words[last]);
-
-    last = words.indexOf(wordToFind); 
-
-}
-
-
-    // Fonction de lancement de la partie :
-
-function newGame() {   
-
-    randomWord();
-
-    wordToFindInArray = wordToFind.split('');
-
-    console.log(wordToFind);
-
-    hiddenWord.textContent = wordToFind.slice().replaceAll(/[A-Z]/g, '_');
-
-    letterButton.addEventListener('click', () => {
-
-        if (wordToFindInArray.includes(userLetter.value = userLetter.value.toUpperCase())) {
-            alert('Yes');
-        } else {
-            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
-            alert('Nope')
-            if (score == 7) {
-                userInput.style.display = 'none';
-                hiddenWord.textContent  = wordToFind;
-                hiddenWord.prepend(textContent   = 'Le mot était : ');
-                restartButton.style.display      = 'block'; 
+        // Fonction de lancement de la partie :
+    
+    function newGame() {   
+    
+        randomWord();
+    
+        wordToFindInArray = wordToFind.split('');
+    
+        console.log(wordToFind);
+    
+        hiddenWord.textContent = wordToFind.slice().replaceAll(/[A-Z]/g, '_');
+    
+        letterButton.addEventListener('click', () => {
+    
+            if (wordToFindInArray.includes(userLetter.value = userLetter.value.toUpperCase())) {
+                alert('Yes');
+                userLetter = userLetter.split('');
+                console.log(userLetter);
+            } else {
+                hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
+                alert('Nope')
+                if (score == 7) {
+                    userInput.style.display = 'none';
+                    hiddenWord.textContent  = wordToFind;
+                    hiddenWord.prepend(textContent   = 'Le mot était : ');
+                    restartButton.style.display      = 'block'; 
+                }
             }
+        });
+    
+        wordButton.addEventListener('click', () => {
+    
+            if (wordToFind == userWord.value.toUpperCase()) {
+                alert('Yes')
+            } else {
+                hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
+                alert('Nope')
+                if (score == 7) {
+                    userInput.style.display = 'none';
+                    hiddenWord.textContent  = wordToFind;
+                    hiddenWord.prepend(textContent   = 'Le mot était :');
+                    restartButton.style.display      = 'block';
+                }
+            }
+        });
+    }
+    
+    
+
+        // Création du bouton masqué si l'utilisateur pense connaître le mot :
+
+    shortcutButton.addEventListener('click', () => {
+
+        if (hidden) {
+    
+            userWordForm.style.display = 'block';
+            shortcutButton.textContent = 'Finalement... peut-être pas !';
+            hidden = false;
+            
+        } else {
+    
+            shortcutButton.textContent = `J'ai trouvé le mot !`;
+            userWordForm.style.display = 'none';
+            hidden = true;
         }
     });
 
-    wordButton.addEventListener('click', () => {
+    
+    
 
-        if (wordToFind == userWord.value.toUpperCase()) {
-            alert('Yes')
+        // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'une lettre :
+    
+    userLetter.addEventListener('keyup', () => {
+        if (isNaN(userLetter.value) || userLetter.value == '') { 
+            alertMessageLetter.style.display = 'none';
         } else {
-            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
-            alert('Nope')
-            if (score == 7) {
-                userInput.style.display = 'none';
-                hiddenWord.textContent  = wordToFind;
-                hiddenWord.prepend(textContent   = 'Le mot était :');
-                restartButton.style.display      = 'block';
-            }
+            alertMessageLetter.style.display = 'block';
         }
     });
-}
 
 
-    // Appel de la fonction de début de partie :
 
-newGame();
+
+        // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'un mot :
+    
+    userWord.addEventListener('keyup', () => {
+         if (isNaN(userWord.value) || userWord.value == '') { 
+            alertMessageWord.style.display = 'none';
+         } else {
+             alertMessageWord.style.display = 'block';        
+         }
+    });
+    
+
+
+    // function getIndexOfHiddenWord(letter) {
+    //     let indexes = [];
+    //     ([...wordToFindInArray].forEach(val, i)) => {
+    //         if (val === letter) {
+    //             const index = 1;
+    //             indexes.push(index);
+    //         }
+    //         console.log(indexes);
+    //         return indexes;
+    //     }
+    //   }
+    
+    //   getIndexOfHiddenWord();
+
+
+
+
+            // Appel de la fonction de début de partie :
+
+
+    newGame();
