@@ -104,14 +104,12 @@ restartButton.style.display      = 'none';
         wordButton.addEventListener('click', () => {
     
             if (wordToFind == userWord.value.toUpperCase()) {
-                alert('Yes');
                 userInput.style.display = 'none';
                 hiddenWord.textContent  = wordToFind;
                 hiddenWord.prepend(textContent   = 'Félicitations, vous avez trouvé : ');
                 restartButton.style.display      = 'block';
             } else {
                 hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
-                alert('Nope')
                 if (score == 7) {
                     userInput.style.display = 'none';
                     hiddenWord.textContent  = wordToFind;
