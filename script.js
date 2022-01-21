@@ -1,6 +1,6 @@
 // Initialisation des variables :
 
-let userLetter, hangman, wordButton, letterButton, alertMessageLetter, restartButton, userWord, userInput, wordToFind, shortcutButton, userWordForm, wordToFindInArray, hiddenWord;
+let userLetter, hangman, wordButton, letterButton, alertMessageLetter, remainingLetters, restartButton, userWord, userInput, wordToFind, shortcutButton, userWordForm, wordToFindInArray, hiddenWord;
 let last   = 0;
 let score  = 0;
 let hidden = true;
@@ -39,6 +39,7 @@ alertMessageWord   = document.querySelector('#alertMessageLetter');
 
 hangman.innerHTML                = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
 alertMessageLetter.style.display = 'none';
+alertMessageWord.style.display   = 'none';
 userWordForm.style.display       = 'none';
 restartButton.style.display      = 'none';
 
@@ -63,18 +64,26 @@ restartButton.style.display      = 'none';
     function newGame() {   
     
         randomWord();
-    
-        wordToFindInArray = wordToFind.split('');
-    
+
         console.log(wordToFind);
     
+        wordToFindInArray = wordToFind.split('');
+
+        console.log(wordToFindInArray);
+
+        hiddenWord = wordToFindInArray;
+
+        console.log(hiddenWord)
+
         hiddenWord.textContent = wordToFind.slice().replaceAll(/[A-Z]/g, '_');
+
+        console.log(hiddenWord)
+
     
         letterButton.addEventListener('click', () => {
     
             if (wordToFindInArray.includes(userLetter.value = userLetter.value.toUpperCase())) {
                 alert('Yes');
-                userLetter = userLetter.split('');
                 console.log(userLetter);
             } else {
                 hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
@@ -91,7 +100,11 @@ restartButton.style.display      = 'none';
         wordButton.addEventListener('click', () => {
     
             if (wordToFind == userWord.value.toUpperCase()) {
-                alert('Yes')
+                alert('Yes');
+                userInput.style.display = 'none';
+                hiddenWord.textContent  = wordToFind;
+                hiddenWord.prepend(textContent   = 'Félicitations, vous avez trouvé : ');
+                restartButton.style.display      = 'block';
             } else {
                 hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
                 alert('Nope')
@@ -105,20 +118,17 @@ restartButton.style.display      = 'none';
         });
     }
     
-    
 
         // Création du bouton masqué si l'utilisateur pense connaître le mot :
 
     shortcutButton.addEventListener('click', () => {
 
         if (hidden) {
-    
             userWordForm.style.display = 'block';
             shortcutButton.textContent = 'Finalement... peut-être pas !';
             hidden = false;
             
         } else {
-    
             shortcutButton.textContent = `J'ai trouvé le mot !`;
             userWordForm.style.display = 'none';
             hidden = true;
@@ -166,6 +176,31 @@ restartButton.style.display      = 'none';
     //   }
     
     //   getIndexOfHiddenWord();
+
+
+
+
+
+            // for (let i = 0; i < wordToFind.length; i++) {
+        //     wordToFindInArray[i] = '_';
+        // }
+
+        // console.log(wordToFindInArray);
+
+        // remainingLetters = wordToFind.length;
+
+        // while (remainingLetters > 0) {
+        //     console.log(wordToFindInArray.join(" "));
+        // }
+
+        // letterButton.addEventListener('click', () => {
+            // for (let j = 0; j < wordToFind.length; j++) {
+            //     if (wordToFind[j] = userLetter) {
+            //         wordToFindInArray[j] = userLetter;
+            //         remainingLetters--
+            //     }     
+            // }
+        // }
 
 
 
