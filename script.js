@@ -1,6 +1,6 @@
 // Initialisation des variables :
 
-let userLetter, hangman, wordButton, letterButton, alertMessageLetter, alertMessageWord, restartButton, userWord, userInput, wordToFind, shortcutButton, userWordForm, wordToFindInArray, hiddenWord;
+let userLetter, hangman, wordButton, letterButton, usedLetters, result, alertMessageLetter, alertMessageWord, restartButton, lettersLeft, userWord, userInput, wordToFind, shortcutButton, userWordForm, wordToFindInArray, hiddenWord;
 let last   = 0;
 let score  = 0;
 let hidden = true;
@@ -26,6 +26,8 @@ userWord       = document.querySelector('#userWord');
 letterButton   = document.querySelector('#letterButton');
 wordButton     = document.querySelector('#wordButton');
 userInput      = document.querySelector('#userInput'); 
+result         = document.querySelector('#result');
+usedLetters    = document.querySelector('#usedLetters');
 restartButton     = document.querySelector('#restartButton');
 shortcutButton     = document.querySelector('#shortcutButton');
 userWordForm       = document.querySelector('#userWordForm');
@@ -51,9 +53,9 @@ restartButton.style.display      = 'none';
     
         do {
             wordToFind = words[Math.floor(Math.random() * words.length)];
-        } while (words.indexOf(wordToFind) === words[last]);
+        } while (words.indexOf(wordToFind) == last);
     
-        last = words.indexOf(wordToFind); 
+        last = wordToFind; 
     
         hiddenWord.textContent = wordToFind.slice().replaceAll(/[A-Z]/g, '_');
     }
@@ -66,9 +68,17 @@ restartButton.style.display      = 'none';
     
         randomWord();
 
+        console.log(last);
+
+        console.log(words.indexOf(wordToFind))
+
+        lettersLeft = wordToFind.length;
+
         console.log(wordToFind);
     
         wordToFindInArray = wordToFind.split('');
+
+        console.log(wordToFindInArray);
 
         for (let i = 0; i < wordToFind.length; i++) {
             wordToFindInArray[i] = "_";
@@ -81,19 +91,27 @@ restartButton.style.display      = 'none';
                 for (let j = 0; j < wordToFind.length; j++) {
                     if (wordToFind[j] === userLetter.value.toUpperCase()) {
                         wordToFindInArray[j] = userLetter.value.toUpperCase();
+                        lettersLeft--;
+                        hiddenWord.textContent = wordToFindInArray.join('');
+
+                    } else if (lettersLeft == 0) {
+                        userInput.style.display = 'none';
+                        hiddenWord.textContent  = wordToFind;
+                        result.textContent      = ('Félicitations, vous avez trouvé : ');
+                        restartButton.style.display      = 'block';
                     }
                 };
-
-                hiddenWord.textContent = wordToFindInArray.join('');
 
             } else {
 
                 hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
 
+                usedLetters.textContent = `Lettres utilisées : ${userLetter.value}`;
+
                 if (score == 7) {
                     userInput.style.display = 'none';
                     hiddenWord.textContent  = wordToFind;
-                    hiddenWord.prepend(textContent   = 'Le mot était :');
+                    result.textContent      = ('Perdu ! Le mot était : ');
                     restartButton.style.display      = 'block';
                 }
             }
@@ -106,14 +124,14 @@ restartButton.style.display      = 'none';
             if (wordToFind == userWord.value.toUpperCase()) {
                 userInput.style.display = 'none';
                 hiddenWord.textContent  = wordToFind;
-                hiddenWord.prepend(textContent   = 'Félicitations, vous avez trouvé : ');
+                result.textContent      = ('Félicitations, vous avez trouvé : ');
                 restartButton.style.display      = 'block';
             } else {
                 hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
                 if (score == 7) {
                     userInput.style.display = 'none';
                     hiddenWord.textContent  = wordToFind;
-                    hiddenWord.prepend(textContent   = 'Le mot était :');
+                    result.textContent      = ('Perdu ! Le mot était :');
                     restartButton.style.display      = 'block';
                 }
             }
