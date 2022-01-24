@@ -1,10 +1,16 @@
 // Initialisation des variables :
 
-let userLetter, hangman, wordButton, letterButton, usedLetters, result, alertMessageLetter, alertMessageWord, restartButton, lettersLeft, userWord, userInput, wordToFind, shortcutButton, userWordForm, wordToFindInArray, hiddenWord;
+let userLetter, hangman, wordButton, 
+    letterButton, result, 
+    alertMessageLetter, alertMessageWord, 
+    restartButton, lettersLeft, userWord, 
+    userInput, wordToFind, shortcutButton,
+    userWordForm, wordToFindInArray, hiddenWord;
+
 let last   = 0;
 let score  = 0;
-let hidden = true;
-
+let usedLetters = [];
+let hidden      = true;
 
 
 
@@ -12,7 +18,8 @@ let hidden = true;
 
 const words = [
     'PETUNIA', 'HOROSCOPE', 'TAMBOURIN', 'CONQUISTADOR', 'DIAPASON', 'BROUHAHA',
-    'ICEBERG', 'AVALANCHE', 'BILBOQUET', 'CORNEMUSE', 'BELIEVEMY', 'CHIMPANZE'
+    'ICEBERG', 'AVALANCHE', 'BILBOQUET', 'CORNEMUSE', 'BELIEVEMY', 'CHIMPANZE',
+    'MOULT', 'AZIMUT', 'ACAJOU', 'SEUIL', 'BANJO', 'ALOES', 'CORSE', 'CIRE'
     ];
 
 
@@ -49,17 +56,39 @@ restartButton.style.display      = 'none';
     
         // Sortie d'un des mots du tableau 'words' aléatoirement :
     
-    function randomWord() {
-    
-        do {
-            wordToFind = words[Math.floor(Math.random() * words.length)];
-        } while (words.indexOf(wordToFind) == last);
-    
-        last = wordToFind; 
-    
-        hiddenWord.textContent = wordToFind.slice().replaceAll(/[A-Z]/g, '_');
-    }
-    
+function randomWord() {
+
+    do {
+        wordToFind = words[Math.floor(Math.random() * words.length)];
+    } while (words.indexOf(wordToFind) == last);
+
+    last = wordToFind; 
+
+    lettersLeft = wordToFind.length;
+
+    hiddenWord.textContent = wordToFind.slice().replaceAll(/[A-Z]/g, '_');
+}
+
+
+        // En cas de victoire :
+
+function winning() {
+    userInput.style.display = 'none';
+    hiddenWord.textContent  = wordToFind;
+    result.textContent      = ('Félicitations, vous avez trouvé : ');
+    restartButton.style.display = 'block';
+    hangman.innerHTML           = `<img src="img/hangman0.jpg" alt="Image du pendu">`;
+  }
+
+
+        // En cas de défaite : 
+function loosing() {
+    userInput.style.display = 'none';
+    hiddenWord.textContent  = wordToFind;
+    result.textContent      = ('Perdu ! Le mot était : ');
+    restartButton.style.display = 'block';
+    hangman.innerHTML           = `<img src="img/hangman6.jpg" alt="Image du pendu">`;
+}
     
 
         // Fonction de lancement de la partie :
@@ -68,76 +97,64 @@ restartButton.style.display      = 'none';
     
         randomWord();
 
-        console.log(last);
-
-        console.log(words.indexOf(wordToFind))
-
-        lettersLeft = wordToFind.length;
-
         console.log(wordToFind);
     
         wordToFindInArray = wordToFind.split('');
 
-        console.log(wordToFindInArray);
-
         for (let i = 0; i < wordToFind.length; i++) {
             wordToFindInArray[i] = "_";
         };
-    
-        letterButton.addEventListener('click', () => {
-    
-            if (wordToFind.includes(userLetter.value.toUpperCase())) {
 
-                for (let j = 0; j < wordToFind.length; j++) {
-                    if (wordToFind[j] === userLetter.value.toUpperCase()) {
-                        wordToFindInArray[j] = userLetter.value.toUpperCase();
-                        lettersLeft--;
-                        hiddenWord.textContent = wordToFindInArray.join('');
+        if (lettersLeft === 0) {
+            winning();
+        }
 
-                    } else if (lettersLeft == 0) {
-                        userInput.style.display = 'none';
-                        hiddenWord.textContent  = wordToFind;
-                        result.textContent      = ('Félicitations, vous avez trouvé : ');
-                        restartButton.style.display      = 'block';
-                    }
-                };
 
-            } else {
 
-                hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
 
-                usedLetters.textContent = `Lettres utilisées : ${userLetter.value}`;
 
-                if (score == 7) {
-                    userInput.style.display = 'none';
-                    hiddenWord.textContent  = wordToFind;
-                    result.textContent      = ('Perdu ! Le mot était : ');
-                    restartButton.style.display      = 'block';
+            // Validation ou non du mot entré par l'utilisateur.
+
+    letterButton.addEventListener('click', () => {
+
+        // usedLetters.prepend(...userLetter.value);
+        
+        if (wordToFind.includes(userLetter.value.toUpperCase())) {
+            for (let j = 0; j < wordToFind.length; j++) {
+                if (wordToFind[j] === userLetter.value.toUpperCase()) {
+                    wordToFindInArray[j] = userLetter.value.toUpperCase();
+                    lettersLeft--;
+                    hiddenWord.textContent = wordToFindInArray.join('');
+                } else if (lettersLeft === 0) {
+                    winning();
                 }
+            };
+        } else {
+            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
+            if (score == 7) {
+                loosing();
             }
-        });
-    
+        }
+    });
 
 
-        wordButton.addEventListener('click', () => {
-    
-            if (wordToFind == userWord.value.toUpperCase()) {
-                userInput.style.display = 'none';
-                hiddenWord.textContent  = wordToFind;
-                result.textContent      = ('Félicitations, vous avez trouvé : ');
-                restartButton.style.display      = 'block';
-            } else {
-                hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
-                if (score == 7) {
-                    userInput.style.display = 'none';
-                    hiddenWord.textContent  = wordToFind;
-                    result.textContent      = ('Perdu ! Le mot était :');
-                    restartButton.style.display      = 'block';
-                }
+
+             // Validation ou non du mot entré par l'utilisateur.
+    wordButton.addEventListener('click', () => {
+
+        if (wordToFind == userWord.value.toUpperCase()) {
+            winning();
+        } else {
+            hangman.innerHTML = `<img src="img/hangman${score++}.jpg" alt="Image du pendu">`;
+            if (score == 7) {
+                
+                loosing();
             }
-        });
+        }
+    });
     }
     
+
 
 
 
@@ -160,10 +177,13 @@ restartButton.style.display      = 'none';
     
     
 
+
+
+
         // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'une lettre :
     
     userLetter.addEventListener('keyup', () => {
-        if (isNaN(userLetter.value) || userLetter.value !== '') { 
+        if (isNaN(userLetter.value) && userLetter.value !== '') { 
             alertMessageLetter.style.display = 'none';
         } else {
             alertMessageLetter.style.display = 'block';
@@ -174,12 +194,14 @@ restartButton.style.display      = 'none';
         // Message d'alerte si l'utilisateur rentre un nombre plutôt qu'un mot :
     
     userWord.addEventListener('keyup', () => {
-         if (isNaN(userWord.value) || userWord.value !== '') { 
+         if (isNaN(userWord.value) && userWord.value !== '') { 
             alertMessageWord.style.display = 'none';
          } else {
              alertMessageWord.style.display = 'block';        
          }
     });
+
+
 
 
                 // Appel de la fonction de début de partie :
