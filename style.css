@@ -35,17 +35,6 @@ h1 {
     padding-bottom: 50px;
 }
 
-#usedLetters {
-    background   : #4d1a42d5;
-    height       : 30vh;
-    width        : 20%;
-    border-radius: 10px;
-    position: absolute;
-    left    : 70%;
-    bottom  : 50%;
-    color   : var(--couleurOrange);
-}
-
 #userInput {
     text-align: center;
 }
