@@ -51,16 +51,16 @@ h1 {
 }
 
 #keyboard {
-    height: 35vh;
+    height: 30vh;
     width : 40vw;
     margin: 15px;
 }
 
 #letters {
-    display  : flex;
-    flex-wrap: wrap;
+    display        : flex;
+    flex-wrap      : wrap;
     justify-content: space-evenly;
-    font-size: 1.8em;
+    font-size      : 1.8em;
 }
 
 #restartButton,
@@ -112,7 +112,7 @@ h1 {
 
 
 
-    /* Media queries */
+    /* MEDIA QUERIES */
 
 @media all and (max-width: 1400px) {
     #keyboard {
@@ -120,19 +120,19 @@ h1 {
     }
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 850px) {
     #keyboard {
-        height: 20vh;
-        width: 60vw;
+        height: 30vh;
+        width : 65vw;
     }
 
     .alphabet {
-        padding: 15px;
+        padding   : 20px;
         text-align: center;
     }
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 700px) {
     #content {
         background: rgba(2, 0, 36, 0.699);
         width     : 90vw;
@@ -140,13 +140,13 @@ h1 {
     }
 
     #keyboard {
-        height: 25vh;
-        width: 80vw;
+        height : 25vh;
+        width  : 80vw;
         padding: 25px
     }
 }
 
-@media all and (max-width: 400px) {
+@media all and (max-width: 570px) {
     #content {
         background: rgba(2, 0, 36, 0.699);
         width     : 90vw;
@@ -155,6 +155,64 @@ h1 {
 
     #keyboard {
         height: 30vh;
-        width: 80vw;
+        width : 80vw;
+    }
+}
+
+@media all and (max-width: 443px) {
+    #keyboard {
+        height: 40vh;
+    }
+}
+
+@media all and (max-width: 387px) {
+    .alphabet {
+        padding: 15px;
+    }
+
+    #keyboard {
+        height: 25vh;
+    }
+
+    #hiddenWord {
+        margin-top: 10px;
+    }
+}
+
+@media all and (max-width: 350px) {
+    .alphabet {
+        padding: 15px;
+    }
+
+    #keyboard {
+        height: 35vh;
+    }
+
+    #hiddenWord {
+        margin-top    : 10px;
+    }
+}
+
+@media all and (max-width: 335px) {
+    h1 {
+        font-size: 3em;
+    }
+}
+
+@media all and (max-width: 300px) {
+    #keyboard {
+        height: 40vh;
+    }
+}
+
+@media all and (max-width: 290px) {
+    h1 {
+        font-size: 2.5em;
+    }
+}
+
+@media all and (max-width: 250px) {
+    #keyboard {
+        height: 50vh;
     }
 }
