@@ -28,7 +28,7 @@ h1 {
     background: var(--couleurNoire);
     width     : 70vw;
     height    : auto;
-    margin    : 5% auto 0;
+    margin    : 30px auto;
     color     : white;
     display   : flex;
     flex-direction: column;
@@ -162,6 +162,14 @@ h1 {
 @media all and (max-width: 443px) {
     #keyboard {
         height: 40vh;
+    }
+
+    #content {
+        margin: 10px auto;
+    }
+
+    h1 {
+        font-size: 3.25em;
     }
 }
 
